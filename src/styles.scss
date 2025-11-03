@@ -1,0 +1,81 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-green: #22c55e;
+  --dark-green: #16a34a;
+  --light-green: #dcfce7;
+  --text-dark: #1f2937;
+  --text-gray: #6b7280;
+  --bg-light: #f9fafb;
+  --bg-white: #ffffff;
+  --border-gray: #e5e7eb;
+}
+
+body {
+  font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg-light);
+  color: var(--text-dark);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+html, body {
+  height: 100%;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+.mat-mdc-card {
+  border-radius: 12px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+  border: 1px solid var(--border-gray) !important;
+}
+
+.mat-mdc-raised-button {
+  border-radius: 8px !important;
+  text-transform: none !important;
+  font-weight: 500 !important;
+  padding: 0 20px !important;
+  height: 40px !important;
+}
+
+.table-container {
+  overflow-x: auto;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+// Global fix for Material table headers
+.mat-mdc-header-cell,
+.mat-mdc-header-cell * {
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+  overflow: visible !important;
+}
+
+.mat-mdc-header-row {
+  display: table-row !important;
+}
+
+// Ensure header content doesn't wrap
+.mat-mdc-header-cell .mat-sort-header-content,
+.mat-mdc-header-cell .sortable-header {
+  display: inline-flex !important;
+  align-items: center !important;
+  white-space: nowrap !important;
+  flex-wrap: nowrap !important;
+}
+
+.mat-mdc-header-cell mat-icon {
+  display: inline-block !important;
+  white-space: nowrap !important;
+}
+

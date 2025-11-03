@@ -1,0 +1,527 @@
+// Mobile-first responsive design
+
+.car-list-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+// Page Header - Mobile
+.page-header {
+  margin-bottom: 1rem;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0 0 0.25rem 0;
+}
+
+.page-subtitle {
+  font-size: 0.875rem;
+  color: var(--text-gray);
+  margin: 0;
+}
+
+.page-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  
+  button {
+    width: 100%;
+  }
+}
+
+// Filter Card - Mobile
+.filter-card {
+  background: var(--bg-white);
+  margin-bottom: 1rem;
+}
+
+.filter-card mat-card-header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-gray);
+}
+
+.filter-card mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin: 0;
+  
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    color: var(--primary-green);
+  }
+}
+
+.filter-badge {
+  margin-left: auto;
+  background: var(--primary-green);
+  color: white;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.filter-form {
+  padding: 1rem;
+}
+
+.filter-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.filter-row > * {
+  width: 100%;
+}
+
+.filter-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  
+  button {
+    width: 100%;
+    height: 44px !important;
+  }
+}
+
+// Results Summary - Mobile
+.results-summary {
+  background: var(--bg-white);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.results-summary p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--text-gray);
+  
+  strong {
+    color: var(--primary-green);
+    font-weight: 700;
+  }
+}
+
+// Table Card - Mobile
+.table-card {
+  background: var(--bg-white);
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.table-container {
+  overflow-x: auto;
+  width: 100%;
+  display: block;
+  -webkit-overflow-scrolling: touch;
+  
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: #cbd5e0;
+    border-radius: 4px;
+    
+    &:hover {
+      background: #a0aec0;
+    }
+  }
+}
+
+.cars-table {
+  width: 100%;
+  min-width: 600px;
+}
+
+.mat-mdc-table {
+  background: white;
+  width: 100%;
+  table-layout: auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  
+  // Ensure columns size properly
+  th, td {
+    white-space: nowrap;
+  }
+}
+
+.mat-mdc-cell {
+  text-align: left;
+  vertical-align: middle;
+}
+
+.mat-mdc-header-cell {
+  font-weight: 600;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-gray);
+  padding: 0.75rem 0.5rem !important;
+  background: var(--bg-light);
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  word-break: keep-all !important;
+  word-wrap: normal !important;
+  text-align: left;
+  vertical-align: middle;
+  min-width: fit-content !important;
+  width: auto !important;
+}
+
+.mat-mdc-header-cell * {
+  white-space: nowrap !important;
+  display: inline !important;
+  flex-shrink: 0;
+}
+
+// Ensure all content in headers stays inline
+.mat-mdc-header-cell {
+  span, div, text {
+    display: inline !important;
+    white-space: nowrap !important;
+  }
+}
+
+.sortable-header {
+  cursor: pointer;
+  user-select: none;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.25rem;
+  transition: all 0.2s ease;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  flex-wrap: nowrap !important;
+  width: auto !important;
+  max-width: none !important;
+  text-align: left;
+  line-height: 1.2;
+  
+  // Ensure text nodes stay inline
+  &::before,
+  &::after {
+    content: none;
+  }
+  
+  // Make sure all children stay inline
+  > * {
+    display: inline !important;
+    white-space: nowrap !important;
+    flex-shrink: 0;
+  }
+  
+  // Text content should stay inline
+  text {
+    white-space: nowrap !important;
+  }
+  
+  &:hover {
+    background: var(--light-green) !important;
+    color: var(--dark-green) !important;
+  }
+}
+
+.sort-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: var(--text-gray);
+  transition: all 0.2s ease;
+  flex-shrink: 0 !important;
+  display: inline-block !important;
+  vertical-align: middle;
+  line-height: 1;
+  
+  .sortable-header:hover & {
+    color: var(--primary-green);
+  }
+}
+
+::ng-deep .mat-mdc-header-cell {
+  white-space: nowrap !important;
+  text-align: left !important;
+  vertical-align: middle !important;
+  overflow: visible !important;
+  
+  .mat-sort-header-content {
+    white-space: nowrap !important;
+    overflow: visible !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    width: auto !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+  }
+  
+  // Ensure all text stays on one line
+  span, mat-icon {
+    display: inline !important;
+    white-space: nowrap !important;
+  }
+}
+
+// Align numeric columns to the right
+::ng-deep .mat-column-price,
+::ng-deep .mat-column-horsepower,
+::ng-deep .mat-column-engineSize,
+::ng-deep .mat-column-cityMpg,
+::ng-deep .mat-column-highwayMpg,
+::ng-deep .mat-column-mpg,
+::ng-deep .mat-column-cylinders,
+::ng-deep .mat-column-displacement,
+::ng-deep .mat-column-weight,
+::ng-deep .mat-column-acceleration,
+::ng-deep .mat-column-model_year {
+  .mat-mdc-header-cell {
+    text-align: right !important;
+    
+    .sortable-header {
+      justify-content: flex-end !important;
+    }
+  }
+  
+  .mat-mdc-cell {
+    text-align: right !important;
+  }
+}
+
+.car-row {
+  border-bottom: 1px solid var(--border-gray);
+  transition: all 0.2s ease;
+  
+  td {
+    padding: 0.75rem 0.5rem !important;
+    font-size: 0.875rem;
+    color: var(--text-dark);
+    white-space: nowrap !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  &:hover {
+    background: var(--light-green) !important;
+  }
+  
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.empty-state {
+  padding: 3rem 1rem !important;
+  text-align: center;
+}
+
+.empty-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.empty-message mat-icon {
+  font-size: 3rem;
+  width: 3rem;
+  height: 3rem;
+  color: #cbd5e0;
+}
+
+.empty-message p {
+  font-size: 1rem;
+  margin: 0;
+  color: #718096;
+  font-weight: 500;
+}
+
+// Tablet (768px and up)
+@media (min-width: 768px) {
+  .car-list-container {
+    gap: 1.5rem;
+  }
+
+  .page-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .page-title {
+    font-size: 1.75rem;
+  }
+
+  .page-subtitle {
+    font-size: 1rem;
+  }
+
+  .page-actions {
+    flex-direction: row;
+    gap: 1rem;
+    
+    button {
+      width: auto;
+      flex: 1;
+    }
+  }
+
+  .filter-card mat-card-header {
+    padding: 1.25rem;
+  }
+
+  .filter-card mat-card-title {
+    font-size: 1.125rem;
+    
+    mat-icon {
+      font-size: 22px;
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  .filter-form {
+    padding: 1.25rem;
+  }
+
+  .filter-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+    
+    > * {
+      flex: 1;
+      min-width: 140px;
+      width: auto;
+    }
+  }
+
+  .search-field {
+    flex: 1.5;
+  }
+
+  .filter-actions {
+    flex-direction: row;
+    gap: 0.75rem;
+    
+    button {
+      flex: 1;
+      width: auto;
+    }
+  }
+
+  .results-summary {
+    padding: 1rem 1.5rem;
+  }
+
+  .results-summary p {
+    font-size: 0.95rem;
+  }
+
+  .cars-table {
+    min-width: 700px;
+  }
+
+  .mat-mdc-header-cell {
+    padding: 1rem 0.75rem !important;
+    font-size: 0.75rem;
+  }
+
+  .car-row td {
+    padding: 1rem 0.75rem !important;
+    font-size: 0.9rem;
+  }
+
+  .sort-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+// Desktop (1024px and up)
+@media (min-width: 1024px) {
+  .car-list-container {
+    gap: 2rem;
+  }
+
+  .page-header {
+    margin-bottom: 2rem;
+  }
+
+  .page-title {
+    font-size: 2rem;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .page-subtitle {
+    font-size: 1rem;
+  }
+
+  .page-actions {
+    margin-top: 1.5rem;
+  }
+
+  .filter-card mat-card-header {
+    padding: 1.5rem;
+  }
+
+  .filter-card mat-card-title {
+    font-size: 1.25rem;
+    
+    mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .filter-form {
+    padding: 1.5rem;
+  }
+
+  .filter-row {
+    gap: 1rem;
+    
+    > * {
+      min-width: 150px;
+    }
+  }
+
+  .results-summary {
+    padding: 1rem 1.5rem;
+  }
+
+  .mat-mdc-header-cell {
+    padding: 1rem !important;
+    font-size: 0.75rem;
+  }
+
+  .car-row td {
+    padding: 1rem !important;
+    font-size: 0.9rem;
+  }
+}

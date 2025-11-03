@@ -1,0 +1,236 @@
+<div class="car-list-container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <h1 class="page-title">Dashboard</h1>
+    <p class="page-subtitle">Manage, filter, and explore your car collection with ease.</p>
+  </div>
+
+  <!-- Filter Panel -->
+  <mat-card class="filter-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>filter_list</mat-icon>
+        Filters & Search
+        <mat-chip *ngIf="getActiveFilterCount() > 0" class="filter-badge">
+          {{ getActiveFilterCount() }} active
+        </mat-chip>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="filterForm" class="filter-form">
+        <div class="filter-row">
+          <mat-form-field appearance="outline" class="search-field">
+            <mat-label>Search</mat-label>
+            <input matInput formControlName="searchTerm" placeholder="Search...">
+            <mat-icon matPrefix>search</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Make</mat-label>
+            <mat-select formControlName="makeFilter">
+              <mat-option value="">All</mat-option>
+              <mat-option *ngFor="let make of makes" [value]="make">{{ make }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Cylinders</mat-label>
+            <mat-select formControlName="cylindersFilter">
+              <mat-option value="">All</mat-option>
+              <mat-option *ngFor="let cylinder of cylinders" [value]="cylinder">{{ cylinder }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div class="filter-actions">
+            <button mat-raised-button color="warn" (click)="clearFilters()" type="button">
+              <mat-icon>clear</mat-icon>
+              Clear
+            </button>
+            <button mat-raised-button color="primary" (click)="exportToCsv()" type="button">
+              <mat-icon>download</mat-icon>
+              Export
+            </button>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Results Summary -->
+  <div class="results-summary">
+    <p>
+      Showing <strong>{{ filteredCars.length }}</strong> of <strong>{{ allCars.length }}</strong> cars
+    </p>
+  </div>
+
+  <!-- Data Table -->
+  <mat-card class="table-card">
+    <mat-card-content>
+      <div class="table-container">
+        <table mat-table [dataSource]="dataSource" class="cars-table">
+          <!-- Make Column -->
+          <ng-container matColumnDef="make">
+            <th mat-header-cell *matHeaderCellDef (click)="onSort('make')" class="sortable-header">
+              Make
+              <mat-icon class="sort-icon">{{ getSortIcon('make') }}</mat-icon>
+            </th>
+            <td mat-cell *matCellDef="let car">{{ car.make || 'N/A' }}</td>
+          </ng-container>
+
+          <!-- Body Style Column -->
+          <ng-container matColumnDef="bodyStyle">
+            <th mat-header-cell *matHeaderCellDef (click)="onSort('bodyStyle')" class="sortable-header">
+              Body Style
+              <mat-icon class="sort-icon">{{ getSortIcon('bodyStyle') }}</mat-icon>
+            </th>
+            <td mat-cell *matCellDef="let car">{{ car.bodyStyle || 'N/A' }}</td>
+          </ng-container>
+
+          <!-- Fuel Type Column -->
+          <ng-container matColumnDef="fuelType">
+            <th mat-header-cell *matHeaderCellDef (click)="onSort('fuelType')" class="sortable-header">
+              Fuel Type
+              <mat-icon class="sort-icon">{{ getSortIcon('fuelType') }}</mat-icon>
+            </th>
+            <td mat-cell *matCellDef="let car">{{ car.fuelType || 'N/A' }}</td>
+          </ng-container>
+
+          <!-- Drive Wheels Column -->
+          <ng-container matColumnDef="driveWheels">
+            <th mat-header-cell *matHeaderCellDef (click)="onSort('driveWheels')" class="sortable-header">
+              Drive Wheels
+              <mat-icon class="sort-icon">{{ getSortIcon('driveWheels') }}</mat-icon>
+            </th>
+            <td mat-cell *matCellDef="let car">{{ car.driveWheels || 'N/A' }}</td>
+          </ng-container>
+
+          <!-- Engine Size Column -->
+          <ng-container matColumnDef="engineSize">
+            <th mat-header-cell *matHeaderCellDef (click)="onSort('engineSize')" class="sortable-header">
+              Engine Size
+              <mat-icon class="sort-icon">{{ getSortIcon('engineSize') }}</mat-icon>
+            </th>
+            <td mat-cell *matCellDef="let car">{{ car.engineSize || 'N/A' }}</td>
+          </ng-container>
+
+          <!-- Horsepower Column -->
+          <ng-container matColumnDef="horsepower">
+            <th mat-header-cell *matHeaderCellDef (click)="onSort('horsepower')" class="sortable-header">
+              Horsepower
+              <mat-icon class="sort-icon">{{ getSortIcon('horsepower') }}</mat-icon>
+            </th>
+            <td mat-cell *matCellDef="let car">{{ car.horsepower || 'N/A' }}</td>
+          </ng-container>
+
+          <!-- City MPG Column -->
+          <ng-container matColumnDef="cityMpg">
+            <th mat-header-cell *matHeaderCellDef (click)="onSort('cityMpg')" class="sortable-header">
+              City MPG
+              <mat-icon class="sort-icon">{{ getSortIcon('cityMpg') }}</mat-icon>
+            </th>
+            <td mat-cell *matCellDef="let car">{{ car.cityMpg || 'N/A' }}</td>
+          </ng-container>
+
+          <!-- Highway MPG Column -->
+          <ng-container matColumnDef="highwayMpg">
+            <th mat-header-cell *matHeaderCellDef (click)="onSort('highwayMpg')" class="sortable-header">
+              Highway MPG
+              <mat-icon class="sort-icon">{{ getSortIcon('highwayMpg') }}</mat-icon>
+            </th>
+            <td mat-cell *matCellDef="let car">{{ car.highwayMpg || 'N/A' }}</td>
+          </ng-container>
+
+          <!-- Price Column -->
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef (click)="onSort('price')" class="sortable-header">
+              Price
+              <mat-icon class="sort-icon">{{ getSortIcon('price') }}</mat-icon>
+            </th>
+            <td mat-cell *matCellDef="let car">
+              {{ car.price ? '$' + car.price : 'N/A' }}
+            </td>
+          </ng-container>
+
+          <!-- Alternative Dataset Columns -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef (click)="onSort('name')" class="sortable-header">
+              Name
+              <mat-icon class="sort-icon">{{ getSortIcon('name') }}</mat-icon>
+            </th>
+            <td mat-cell *matCellDef="let car">{{ car.name || 'N/A' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="mpg">
+            <th mat-header-cell *matHeaderCellDef (click)="onSort('mpg')" class="sortable-header">
+              MPG
+              <mat-icon class="sort-icon">{{ getSortIcon('mpg') }}</mat-icon>
+            </th>
+            <td mat-cell *matCellDef="let car">{{ car.mpg || 'N/A' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="cylinders">
+            <th mat-header-cell *matHeaderCellDef (click)="onSort('cylinders')" class="sortable-header">
+              Cylinders
+              <mat-icon class="sort-icon">{{ getSortIcon('cylinders') }}</mat-icon>
+            </th>
+            <td mat-cell *matCellDef="let car">{{ car.cylinders || 'N/A' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="displacement">
+            <th mat-header-cell *matHeaderCellDef (click)="onSort('displacement')" class="sortable-header">
+              Displacement
+              <mat-icon class="sort-icon">{{ getSortIcon('displacement') }}</mat-icon>
+            </th>
+            <td mat-cell *matCellDef="let car">{{ car.displacement || 'N/A' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="weight">
+            <th mat-header-cell *matHeaderCellDef (click)="onSort('weight')" class="sortable-header">
+              Weight
+              <mat-icon class="sort-icon">{{ getSortIcon('weight') }}</mat-icon>
+            </th>
+            <td mat-cell *matCellDef="let car">{{ car.weight || 'N/A' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="acceleration">
+            <th mat-header-cell *matHeaderCellDef (click)="onSort('acceleration')" class="sortable-header">
+              Acceleration
+              <mat-icon class="sort-icon">{{ getSortIcon('acceleration') }}</mat-icon>
+            </th>
+            <td mat-cell *matCellDef="let car">{{ car.acceleration || 'N/A' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="model_year">
+            <th mat-header-cell *matHeaderCellDef (click)="onSort('model_year')" class="sortable-header">
+              Year
+              <mat-icon class="sort-icon">{{ getSortIcon('model_year') }}</mat-icon>
+            </th>
+            <td mat-cell *matCellDef="let car">{{ car.model_year || 'N/A' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="origin">
+            <th mat-header-cell *matHeaderCellDef (click)="onSort('origin')" class="sortable-header">
+              Origin
+              <mat-icon class="sort-icon">{{ getSortIcon('origin') }}</mat-icon>
+            </th>
+            <td mat-cell *matCellDef="let car">{{ car.origin || 'N/A' }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="car-row"></tr>
+
+          <!-- Empty State -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell empty-state" [attr.colspan]="displayedColumns.length">
+              <div class="empty-message">
+                <mat-icon>inbox</mat-icon>
+                <p>No cars found matching your filters</p>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
