@@ -1,0 +1,26 @@
+steps:
+  # Install frontend dependencies
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['install']
+  
+  # Build frontend for production
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['run', 'build', '--', '--configuration=production']
+  
+  # Install Firebase CLI globally
+  - name: 'gcr.io/cloud-builders/npm'
+    args: ['install', '-g', 'firebase-tools']
+  
+  # Deploy frontend to Firebase Hosting
+  - name: 'gcr.io/cloud-builders/node'
+    entrypoint: 'firebase'
+    args: ['deploy', '--only', 'hosting', '--token', '${_FIREBASE_TOKEN}']
+    env:
+      - 'FIREBASE_TOKEN=${_FIREBASE_TOKEN}'
+
+options:
+  machineType: 'N1_HIGHCPU_8'
+  logging: CLOUD_LOGGING_ONLY
+
+timeout: 1200s
+
