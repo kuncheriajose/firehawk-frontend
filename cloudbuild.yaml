@@ -1,8 +1,3 @@
-availableSecrets:
-  secretManager:
-    - versionName: projects/adroit-listener-476907-m0/secrets/firebase-service-account-key/versions/latest
-      env: GOOGLE_APPLICATION_CREDENTIALS_JSON 
-
 steps:
   # Install frontend dependencies
   - name: 'gcr.io/cloud-builders/npm'
@@ -19,13 +14,17 @@ steps:
       - '-c'
       - |
         npm install -g firebase-tools
-        echo "$GOOGLE_APPLICATION_CREDENTIALS_JSON" > /workspace/service-account-key.json
+        echo "${GOOGLE_APPLICATION_CREDENTIALS_JSON}" > /workspace/service-account-key.json
         export GOOGLE_APPLICATION_CREDENTIALS=/workspace/service-account-key.json
         firebase deploy --only hosting --project adroit-listener-476907-m0
     secretEnv: ['GOOGLE_APPLICATION_CREDENTIALS_JSON']
 
+availableSecrets:
+  secretManager:
+    - versionName: projects/adroit-listener-476907-m0/secrets/firebase-service-account-key/versions/latest
+      env: GOOGLE_APPLICATION_CREDENTIALS_JSON
+
 options:
   machineType: 'N1_HIGHCPU_8'
   logging: CLOUD_LOGGING_ONLY
-
 timeout: 1200s
